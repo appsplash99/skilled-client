@@ -15,10 +15,7 @@ function App() {
       <SkilledNavbar
         setShowMobileNav={setShowMobileNav}
         showMobileNav={showMobileNav}></SkilledNavbar>
-      <div
-        style={{
-          marginTop: '7rem',
-        }}>
+      <div>
         <Routes>
           <Route path="/" element={<VideoListing />} />
           <Route path="/:videoId" element={<VideoPage />} />
