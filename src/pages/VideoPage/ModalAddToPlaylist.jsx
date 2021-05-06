@@ -18,13 +18,7 @@ export const ModalAddToPlaylist = ({
   const [newPlaylistName, setNewPlaylistName] = useState('');
 
   return (
-    <dvi
-      className="flex flex--column align-items--c justify-content--c"
-      style={
-        {
-          // paddingTop: 'var(--space-xxxl)',
-        }
-      }>
+    <dvi className="flex flex--column align-items--c justify-content--c">
       <div
         style={{
           display: showModal ? 'block' : 'none',

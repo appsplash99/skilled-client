@@ -25,11 +25,9 @@ export const VideoPage = () => {
   } = useLibraryContext();
 
   const customIFrameWidth = useWidth();
-  const { videoId } = useParams(); // console.log(videoId);
+  const { videoId } = useParams();
   const correctVideoId = videoId.substring(1);
-  const desiredVideo = findItemInArray(VIDEOSDATA, videoId.substring(1)); // console.log(desiredVideo);
-
-  console.log({ playlists, likedVideos, watchLater });
+  const desiredVideo = findItemInArray(VIDEOSDATA, videoId.substring(1));
 
   return (
     <div className="flex flex--column align-items--c justify-content--c mx--md">

@@ -99,5 +99,3 @@ export const sevenVideoObjects = [{
 ]
 
 export const VIDEOSDATA = [...sevenVideoObjects, ...sevenVideoObjects]
-
-// console.log(VIDEOSDATA)
