@@ -2,9 +2,6 @@ import './TopbarResp1.css';
 import { FaBars } from 'react-icons/fa';
 import { BtnIcon } from '../../../Button';
 import {
-  // topbarResp,
-  // topbarRespDesktopMenu,
-  // topbarRespMobileContainer,
   topbarRespMobileMenu,
 } from './topbarRespBaseStyles';
 
