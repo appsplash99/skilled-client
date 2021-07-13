@@ -13,7 +13,6 @@ export const UserMenu = () => {
   const [hasToken, setHasToken] = useState(false);
   const {
     state: { playlists },
-    dispatch,
   } = useLibraryContext();
 
   useEffect(() => {
@@ -61,7 +60,7 @@ export const UserMenu = () => {
           ></DataBadgeIcon>
           <h3 className="non-desktop-title">Liked Videos</h3>
         </Link>
-        <Link className="nav__link text--dark flex align-items--c gap" to="/liked-videos">
+        <Link className="nav__link text--dark flex align-items--c gap" to="/saved-videos">
           <DataBadgeIcon
             iconstyle={{
               backgroundColor: "inherit",

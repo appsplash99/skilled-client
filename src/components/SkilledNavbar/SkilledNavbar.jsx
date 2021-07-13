@@ -9,7 +9,7 @@ export const SkilledNavbar = ({ showMobileNav, setShowMobileNav }) => {
       showMobileMenu={showMobileNav}
       handleShowMobileMenu={() => setShowMobileNav(!showMobileNav)}
       desktopMenuStyle={{ backgroundColor: "none" }}
-      mobileMenuStyle={{ backgroundColor: "var(--grey-300)" }}
+      mobileMenuStyle={{ backgroundColor: "var(--grey-300)", zIndex: 10000 }}
       style={{ overflow: "hidden", backgroundColor: "var(--light)", position: "fixed", padding: "0", zIndex: "6000" }}
       actionButtonsContainer={<UserMenu />}
       navbarLogo={
