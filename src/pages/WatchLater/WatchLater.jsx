@@ -6,7 +6,6 @@ import { BtnIcon } from "morphine-ui";
 export const WatchLater = () => {
   const {
     state: { playlists },
-    dispatch,
   } = useLibraryContext();
 
   const watchLater = playlists.filter((playlistObj) => playlistObj.name === "Watch Later")[0].videos;
