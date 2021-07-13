@@ -42,9 +42,9 @@ export const Login = (props) => {
       }
       if (response.status === 200) {
         console.log(response);
-        const { token } = response.data;
+        const { token, userId } = response.data;
         // save token in local storage
-        setLocalCredentials(token);
+        setLocalCredentials(token, userId);
         // alert(response.data.)
         navigate("/playlist");
       }
