@@ -46,7 +46,7 @@ export const Login = (props) => {
         // save token in local storage
         setLocalCredentials(token, userId);
         // alert(response.data.)
-        navigate("/playlist");
+        navigate("/");
       }
       console.log(response);
       setIsLoading(false);
