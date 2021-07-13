@@ -11,6 +11,10 @@ export const videoActions = {
   LOAD_VIDEOS: "LOAD_VIDEOS",
 };
 
+export const userActions = {
+  LOGOUT_USER: "LOGOUT_USER",
+};
+
 export const libraryReducer = (prevState, { type, payload }) => {
   switch (type) {
     case "LOAD_CATEGORIES":
@@ -41,6 +45,9 @@ export const libraryReducer = (prevState, { type, payload }) => {
         // replace desired object with payload
         playlists: prevState.playlists.map((playlistObj) => (playlistObj._id === payload._id ? payload : playlistObj)),
       };
+
+    case userActions.LOGOUT_USER:
+      return { ...prevState, videos: [], playlists: [], categories: [] };
 
     default:
       console.log("this action migh not be present in reducer");
