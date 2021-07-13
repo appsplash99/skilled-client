@@ -1,0 +1,8 @@
+.non-desktop-title {
+  display: inline-block;
+}
+@media (min-width: 786px) {
+  .non-desktop-title {
+    display: none;
+  }
+}
