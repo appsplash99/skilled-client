@@ -1,10 +1,10 @@
-import { useLibraryContext } from '../../context/libraryState';
-import { Btn, BtnIcon } from '../../components/morphine-ui';
-import { IoIosCloseCircle } from 'react-icons/io';
-import { Link } from 'react-router-dom';
-import { FaPlayCircle, FaRegTrashAlt } from 'react-icons/fa';
+import { useLibraryContext } from "../../context/libraryState";
+import { Btn, BtnIcon } from "morphine-ui";
+import { IoIosCloseCircle } from "react-icons/io";
+import { Link } from "react-router-dom";
+import { FaPlayCircle, FaRegTrashAlt } from "react-icons/fa";
 
-export const WatchLaterPage = () => {
+export const WatchLater = () => {
   const {
     state: { watchLater },
     dispatch,
@@ -15,9 +15,7 @@ export const WatchLaterPage = () => {
       {!watchLater && <div>why so empty....</div>}
       {watchLater &&
         watchLater.map((videoId) => (
-          <div
-            className="flex align-items--c gap p--xxs m--xxs p--xs bg--secondary border-radius--md"
-            key={videoId}>
+          <div className="flex align-items--c gap p--xxs m--xxs p--xs bg--secondary border-radius--md" key={videoId}>
             <div>
               <Link to={`/:${videoId}`}>
                 <img
@@ -30,13 +28,14 @@ export const WatchLaterPage = () => {
               </Link>
               <BtnIcon
                 variant="error"
-                btnSize="lg"
-                handleOnClickProp={() =>
+                size="lg"
+                onClick={() =>
                   dispatch({
-                    type: 'REMOVE_VIDEO_FROM_WATCH_LATER',
+                    type: "REMOVE_VIDEO_FROM_WATCH_LATER",
                     payload: videoId,
                   })
-                }>
+                }
+              >
                 <FaRegTrashAlt className="text--xl text--danger m0" />
               </BtnIcon>
             </div>
