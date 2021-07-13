@@ -29,7 +29,6 @@ export const addVideoToPlaylistDb = async ({ url, token, toast }) => {
     return await axios({ method: "POST", url, headers: { authorization: token } });
   } catch (error) {
     toggleToast(toast, error, "Unable TO ADD Video into Playlist");
-    console.log(error);
   }
 };
 
@@ -40,4 +39,17 @@ export const removeVideoFromPlaylistDb = async ({ url, token, toast }) => {
     toggleToast(toast, error, "Unable TO Remove Video from Playlist");
     console.log(error);
   }
+};
+
+export const createNewPlaylistInDb = async ({ url, token, newPlaylistName }) => {
+  return await axios({
+    method: "POST",
+    url,
+    data: { name: newPlaylistName },
+    headers: { authorization: token },
+  });
+};
+
+export const deletePlaylistFromDb = async ({ url, token }) => {
+  return await axios({ method: "DELETE", url, headers: { authorization: token } });
 };
