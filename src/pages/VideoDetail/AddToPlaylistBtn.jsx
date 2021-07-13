@@ -5,14 +5,10 @@ export const AddToPlaylistBtn = ({
   size,
   style,
   className,
-  // isVideoInPlaylist,
   isVideoInGivenPlaylist,
   handleAddToDesiredPlaylist,
   handleRemoveFromDesiredPlaylist,
 }) => {
-  /*
-  playlistIdWithDesiredVideo = string ("" | "playlistId") 
-  */
   return (
     <>
       {isVideoInGivenPlaylist ? (
