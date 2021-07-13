@@ -1,22 +1,22 @@
-import faker from 'faker';
-import { createContext, useContext, useReducer } from 'react';
-import { libraryReducer } from '../reducer/libraryReducer';
+import faker from "faker";
+import { createContext, useContext, useReducer } from "react";
+import { libraryReducer } from "../reducer/libraryReducer";
 
 const LibraryContext = createContext();
 
 export const LibraryContextProvider = ({ children }) => {
   const initialState = {
-    playlists: [
-      {
-        id: faker.datatype.uuid(),
-        name: 'default playlist',
-        videos: ['uvY3VWe4O4k'],
-      },
-    ],
+    errorMessage: "",
     videos: [],
-    watchLater: ['gfyCzLbcAvk'],
-    watchHistory: [],
-    likedVideos: ['NUs6NDsMWVI'],
+    playlists: [],
+    categories: [], // TODO: ADD CATEGORIES LATER
+    toast: { value: false, message: "" },
+    /**REMOVE BELOW STATES
+     * AS THEY ARE ALREADY PRESENT IN PLAYLISTS STATE
+     */
+    watchLater: [],
+    savedVideos: [],
+    likedVideos: [],
   };
   const [state, dispatch] = useReducer(libraryReducer, initialState);
   return (
@@ -24,7 +24,8 @@ export const LibraryContextProvider = ({ children }) => {
       value={{
         state,
         dispatch,
-      }}>
+      }}
+    >
       {children}
     </LibraryContext.Provider>
   );
