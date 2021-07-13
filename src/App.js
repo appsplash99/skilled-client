@@ -1,15 +1,25 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { LoaderCometSpinner } from "morphine-ui";
-import { PrivateRoute } from "./components/PrivateRoute";
-import { SkilledNavbar } from "./components/SkilledNavbar/SkilledNavbar";
-import { Login, SignUp, VideoDetail, VideoListing, LikedVideos, WatchLater, Playlists } from "./pages";
+import {
+  Login,
+  SignUp,
+  VideoDetail,
+  VideoListing,
+  LikedVideos,
+  WatchLater,
+  Playlists,
+  SavedVideos,
+  PlaylistVideos,
+} from "./pages";
 import "./App.css";
-import { PLAYLIST_ROUTE, VIDEOS_URL } from "./utils/apiRoutes";
-import { getLocalCredentials } from "./utils/localStorage";
-import { loadVideosFromDB, loadUserPlaylists } from "./utils/serverRequests";
-import { useLibraryContext } from "./context/libraryState";
 import { useToast } from "./context/toastState";
+import { PLAYLIST_ROUTE } from "./utils/apiRoutes";
+import { PrivateRoute } from "./components/PrivateRoute";
+import { useLibraryContext } from "./context/libraryState";
+import { getLocalCredentials } from "./utils/localStorage";
+import { loadUserPlaylists } from "./utils/serverRequests";
+import { SkilledNavbar } from "./components/SkilledNavbar/SkilledNavbar";
 
 function App() {
   const [showMobileNav, setShowMobileNav] = useState(false);
@@ -17,7 +27,6 @@ function App() {
   const { token } = getLocalCredentials();
   const { dispatch } = useLibraryContext();
   const { ToastContainer, toast } = useToast();
-
 
   useEffect(() => {
     setIsLoading(true);
@@ -54,8 +63,10 @@ function App() {
 
           {/* PRIVATE ROUTES */}
           <PrivateRoute path="/playlist" element={<Playlists />} />
+          <PrivateRoute path="/playlist/:playlistName/:playlistId" element={<PlaylistVideos />} />
           <PrivateRoute path="/watch-later" element={<WatchLater />} />
           <PrivateRoute path="/liked-videos" element={<LikedVideos />} />
+          <PrivateRoute path="/saved-videos" element={<SavedVideos />} />
 
           <Route path="*" element={<>Route Not Found</>} />
         </Routes>
