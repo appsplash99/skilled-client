@@ -9,9 +9,7 @@ export const LikedVideos = () => {
     dispatch,
   } = useLibraryContext();
 
-  // TO LOAD
   const likedVideos = playlists.filter((playlistObj) => playlistObj.name === "Liked Videos")[0].videos;
-  // console.log(JSON.stringify(likedVideos[0], null, 2));
 
   return (
     <div className="flex flex--column align-items--c justify-content--c">
@@ -35,12 +33,12 @@ export const LikedVideos = () => {
               <BtnIcon
                 variant="error"
                 size="lg"
-                onClick={() =>
-                  dispatch({
-                    type: "REMOVE_VIDEO_FROM_LIKED_VIDEOS",
-                    payload: videoObj.videoId,
-                  })
-                }
+                onClick={() => {
+                  // dispatch({
+                  //   type: "REMOVE_VIDEO_FROM_LIKED_VIDEOS",
+                  //   payload: videoObj.videoId,
+                  // });
+                }}
               >
                 <FaRegTrashAlt className="text--xl text--danger m0" />
               </BtnIcon>
