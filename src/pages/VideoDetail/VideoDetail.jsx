@@ -1,11 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { FaRegCalendar } from "react-icons/fa";
-import {
-  isVideoIdPresentInAnyPlaylists,
-  kFormatter,
-  getIdOfAPlaylist,
-  isVideoInPlaylist,
-} from "../../utils/array-functions";
+import { playlistsContainTheVideo, kFormatter, getIdOfAPlaylist, isVideoInPlaylist } from "../../utils/array-functions";
 import { LoaderCometSpinner } from "morphine-ui";
 import { useWidth } from "../../hooks/useWidth";
 import { ModalAddToPlaylist } from "./ModalAddToPlaylist";
@@ -103,8 +98,7 @@ export const VideoDetail = () => {
           <div className="flex flex--column align-items--c justify-content--c">
             {/* opens modal */}
             <PlaylistModalBtn
-              /** TODO: CHANGE THIS */
-              isVideoAddedInPlaylist={isVideoIdPresentInAnyPlaylists(playlists, _id)}
+              isVideoAddedInPlaylist={playlists && playlistsContainTheVideo({ playlists, video_Id: _id })}
               handleShowHideModal={() => setShowModal(true)}
               style={{ backgroundColor: "var(--grey-200)", height: "3.5rem", width: "3.5rem" }}
             />
