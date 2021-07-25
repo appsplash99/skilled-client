@@ -2,13 +2,23 @@ import { useLibraryContext } from "../../context/libraryState";
 import { Link } from "react-router-dom";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { BtnIcon } from "morphine-ui";
+import { getIdOfAPlaylist } from "../../utils/array-functions";
+import { useToast } from "../../context/toastState";
+import { getLocalCredentials } from "../../utils/localStorage";
+import { deleteVideoFromPlaylist } from "../../utils/serverRequests";
+import { BASE_URL } from "../../utils/apiRoutes";
 
 export const WatchLater = () => {
   const {
     state: { playlists },
+    dispatch,
   } = useLibraryContext();
+  const { toast } = useToast();
+  const { token } = getLocalCredentials();
 
   const watchLater = playlists.filter((playlistObj) => playlistObj.name === "Watch Later")[0].videos;
+
+  const watchLaterPlaylistId = getIdOfAPlaylist(playlists, "Watch Later");
 
   return (
     <div className="flex flex--column align-items--c justify-content--c">
@@ -32,12 +42,14 @@ export const WatchLater = () => {
               <BtnIcon
                 variant="error"
                 size="lg"
-                // onClick={() =>
-                //  { dispatch({
-                //     type: "REMOVE_VIDEO_FROM_LIKED_VIDEOS",
-                //     payload: videoObj.videoId,
-                //   })}
-                // }
+                onClick={() =>
+                  deleteVideoFromPlaylist({
+                    url: `${BASE_URL}/playlist/${watchLaterPlaylistId}/${videoObj._id}`,
+                    toast,
+                    dispatch,
+                    token,
+                  })
+                }
               >
                 <FaRegTrashAlt className="text--xl text--danger m0" />
               </BtnIcon>
