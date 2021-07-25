@@ -60,7 +60,7 @@ export const VideoListing = () => {
             >
               <VideoCardBig
                 videoId={videoObj.videoId}
-                title={videoObj.title.slice(0, 30)}
+                title={videoObj.title.slice(0, 25)}
                 description={videoObj.description}
                 length={videoObj.length}
                 views={videoObj.views}
@@ -87,17 +87,6 @@ export const VideoListing = () => {
                         videoId: videoObj._id,
                       })
                     : false
-                }
-                /** TODO: COMPLETE ABOVE ERROR */
-                playNowBtn={
-                  <Link to={`/:${videoObj.videoId}`}>
-                    <BtnInverted variant="primary" size="sm" style={{ border: "2px solid var(--themePrimary)" }}>
-                      <div className="flex align-items--c justify-content--sb gap--xxs">
-                        <FaPlayCircle className="text--lg" />
-                        <div className="text--xxs">Play Now</div>
-                      </div>
-                    </BtnInverted>
-                  </Link>
                 }
               />
             </div>
