@@ -1,25 +1,4 @@
-/**
- * TODO:
- *  1. seperate actions
- *  2. remove unwanted actions and reducers
- *  */
-export const playlistActions = {
-  LOAD_ALL_PLAYLISTS: "LOAD_ALL_PLAYLISTS",
-  CREATE_NEW_PLAYLIST: "CREATE_NEW_PLAYLIST",
-  CONCAT_CREATED_PLAYLIST: "CONCAT_CREATED_PLAYLIST",
-  UPDATE_PLAYLIST: "UPDATE_PLAYLIST",
-  DELETE_PLAYLIST: "DELETE_PLAYLIST",
-  LOAD_LIKED_VIDEOS_IN_PLAYLIST: "LOAD_LIKED_VIDEOS_IN_PLAYLIST",
-  LOAD_VIDEOS_OF_A_PLAYLIST: "LOAD_VIDEOS_OF_A_PLAYLIST",
-};
-
-export const videoActions = {
-  LOAD_VIDEOS: "LOAD_VIDEOS",
-};
-
-export const userActions = {
-  LOGOUT_USER: "LOGOUT_USER",
-};
+import { playlistActions, userActions, videoActions } from "./actions";
 
 export const libraryReducer = (prevState, { type, payload }) => {
   switch (type) {

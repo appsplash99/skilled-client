@@ -1,0 +1,14 @@
+export const playlistActions = {
+  LOAD_ALL_PLAYLISTS: "LOAD_ALL_PLAYLISTS",
+  LOAD_VIDEOS_OF_A_PLAYLIST: "LOAD_VIDEOS_OF_A_PLAYLIST",
+  CONCAT_CREATED_PLAYLIST: "CONCAT_CREATED_PLAYLIST",
+  DELETE_PLAYLIST: "DELETE_PLAYLIST",
+};
+
+export const videoActions = {
+  LOAD_VIDEOS: "LOAD_VIDEOS",
+};
+
+export const userActions = {
+  LOGOUT_USER: "LOGOUT_USER",
+};
