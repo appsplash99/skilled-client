@@ -4,15 +4,22 @@ import { useLibraryContext } from "../../context/libraryState";
 import { Link } from "react-router-dom";
 import { BtnIcon } from "morphine-ui";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { useToast } from "../../context/toastState";
+import { deleteVideoFromPlaylist } from "../../utils/serverRequests";
+import { BASE_URL } from "../../utils/apiRoutes";
+import { getIdOfAPlaylist } from "../../utils/array-functions";
 
 export const SavedVideos = () => {
-  const { token } = getLocalCredentials();
   const {
     dispatch,
     state: { playlists },
   } = useLibraryContext();
+  const { token } = getLocalCredentials();
+  const { toast } = useToast();
 
   const savedVideos = playlists.filter((playlistObj) => playlistObj.name === "Saved Videos")[0].videos;
+
+  const savedVideosPlaylistId = getIdOfAPlaylist(playlists, "Saved Videos");
 
   return (
     <div className="flex flex--column align-items--c justify-content--c">
@@ -36,12 +43,14 @@ export const SavedVideos = () => {
               <BtnIcon
                 variant="error"
                 size="lg"
-                onClick={() => {
-                  // dispatch({
-                  //   type: "REMOVE_VIDEO_FROM_LIKED_VIDEOS",
-                  //   payload: videoObj.videoId,
-                  // })
-                }}
+                onClick={() =>
+                  deleteVideoFromPlaylist({
+                    url: `${BASE_URL}/playlist/${savedVideosPlaylistId}/${videoObj._id}`,
+                    toast,
+                    dispatch,
+                    token,
+                  })
+                }
               >
                 <FaRegTrashAlt className="text--xl text--danger m0" />
               </BtnIcon>
