@@ -27,7 +27,7 @@ export const UserMenu = () => {
 
   useEffect(() => {
     token && setHasToken(true);
-  }, [hasToken]);
+  }, [token]);
 
   if (hasToken) {
     return (

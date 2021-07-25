@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { FaPlayCircle } from "react-icons/fa";
 import { VIDEOS_URL } from "../../utils/apiRoutes";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { loadVideosFromDB } from "../../utils/serverRequests";
 import { getLocalCredentials } from "../../utils/localStorage";
 import { useLibraryContext } from "../../context/libraryState";
-import { VideoCardBig, BtnInverted, LoaderCometSpinner } from "morphine-ui";
+import { VideoCardBig, LoaderCometSpinner } from "morphine-ui";
 import { kFormatter, getIdOfAPlaylist, isVideoInPlaylist, playlistsContainTheVideo } from "../../utils/array-functions";
 import { toast } from "react-toastify";
 

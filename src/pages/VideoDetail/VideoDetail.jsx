@@ -57,7 +57,7 @@ export const VideoDetail = () => {
       mounted = false;
       source.cancel("Cancelling in cleanup");
     };
-  }, []);
+  }, [_id, token, navigate]);
 
   const likedVideosPlaylistId = getIdOfAPlaylist(playlists, "Liked Videos");
   const savedVideosPlaylistId = getIdOfAPlaylist(playlists, "Saved Videos");
