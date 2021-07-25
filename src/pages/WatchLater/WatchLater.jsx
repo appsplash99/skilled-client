@@ -6,7 +6,7 @@ import { getIdOfAPlaylist } from "../../utils/array-functions";
 import { getLocalCredentials } from "../../utils/localStorage";
 import { deleteVideoFromPlaylist } from "../../utils/serverRequests";
 import { BASE_URL } from "../../utils/apiRoutes";
-import { EmptyPlaylistComponent } from "../../components/EmptyPlaylistComponent/EmptyPlaylistComponent";
+import { EmptyPlaylistComponent } from "../../components";
 
 export const WatchLater = () => {
   const {

@@ -7,7 +7,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { deleteVideoFromPlaylist } from "../../utils/serverRequests";
 import { BASE_URL } from "../../utils/apiRoutes";
 import { getIdOfAPlaylist } from "../../utils/array-functions";
-import { EmptyPlaylistComponent } from "../../components/EmptyPlaylistComponent/EmptyPlaylistComponent";
+import { EmptyPlaylistComponent } from "../../components";
 
 export const SavedVideos = () => {
   const {

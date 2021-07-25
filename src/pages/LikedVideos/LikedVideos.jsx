@@ -6,7 +6,7 @@ import { BASE_URL } from "../../utils/apiRoutes";
 import { getLocalCredentials } from "../../utils/localStorage";
 import { getIdOfAPlaylist } from "../../utils/array-functions";
 import { deleteVideoFromPlaylist } from "../../utils/serverRequests";
-import { EmptyPlaylistComponent } from "../../components/EmptyPlaylistComponent/EmptyPlaylistComponent";
+import { EmptyPlaylistComponent } from "../../components";
 
 export const LikedVideos = () => {
   const {
