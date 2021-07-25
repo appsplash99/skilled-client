@@ -2,7 +2,6 @@ import { BASE_URL } from "../../utils/apiRoutes";
 import { DataBadgeIcon } from "morphine-ui";
 import { BsTrashFill } from "react-icons/bs";
 import { useLibraryContext } from "../../context/libraryState";
-import { useToast } from "../../context/toastState";
 import { Link } from "react-router-dom";
 import { getLocalCredentials } from "../../utils/localStorage";
 import { deleteVideoFromPlaylist } from "../../utils/serverRequests";
@@ -10,7 +9,6 @@ import { deleteVideoFromPlaylist } from "../../utils/serverRequests";
 export const VideoCardHorizontal = ({ video, playlistId, playlistName, videoObj }) => {
   const { videoId, title, channelTitle } = video;
   const { dispatch } = useLibraryContext();
-  const { toast } = useToast();
   const { token } = getLocalCredentials();
   return (
     <div
@@ -34,7 +32,6 @@ export const VideoCardHorizontal = ({ video, playlistId, playlistName, videoObj 
             onClick={() =>
               deleteVideoFromPlaylist({
                 url: `${BASE_URL}/playlist/${playlistId}/${video._id}`,
-                toast,
                 dispatch,
                 token,
               })
