@@ -2,19 +2,17 @@ import { useLibraryContext } from "../../context/libraryState";
 import { BtnIcon } from "morphine-ui";
 import { IoIosCloseCircle } from "react-icons/io";
 import { deletePlaylistFromDb } from "../../utils/serverRequests";
-import { toggleToast } from "../../utils/cutomToastStyles";
-import { useToast } from "../../context/toastState";
 import { BASE_URL } from "../../utils/apiRoutes";
 import { getLocalCredentials } from "../../utils/localStorage";
 import { Link } from "react-router-dom";
 import { toUrlFriendly } from "../../utils/utils";
+import { toast } from "react-toastify";
 
 export const Playlists = () => {
   const {
     state: { playlists },
     dispatch,
   } = useLibraryContext();
-  const { toast } = useToast();
   const { token } = getLocalCredentials();
 
   return (
@@ -38,7 +36,7 @@ export const Playlists = () => {
                     variant="error"
                     style={{ position: "absolute", top: "0.5rem", right: "0.5rem" }}
                     onClick={async () => {
-                      toggleToast(toast, "info", "Removing Playlist...");
+                      toast.info("Removing Playlist...");
                       try {
                         const { data } = await deletePlaylistFromDb({
                           token,
@@ -47,10 +45,10 @@ export const Playlists = () => {
                         });
                         if (data.success) {
                           dispatch({ type: "DELETE_PLAYLIST", payload: data.response });
-                          toggleToast(toast, "success", "Successfully deleted Playlist");
+                          toast.success("Successfully deleted Playlist");
                         }
                       } catch (error) {
-                        toggleToast(toast, "error", "Unable to delete Playlist");
+                        toast.error("Unable to delete Playlist");
                       }
                     }}
                   >
