@@ -4,10 +4,10 @@ import { useLibraryContext } from "../../context/libraryState";
 import { Link } from "react-router-dom";
 import { BtnIcon } from "morphine-ui";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { useToast } from "../../context/toastState";
 import { deleteVideoFromPlaylist } from "../../utils/serverRequests";
 import { BASE_URL } from "../../utils/apiRoutes";
 import { getIdOfAPlaylist } from "../../utils/array-functions";
+import { EmptyPlaylistComponent } from "../../components/EmptyPlaylistComponent/EmptyPlaylistComponent";
 
 export const SavedVideos = () => {
   const {
@@ -15,15 +15,17 @@ export const SavedVideos = () => {
     state: { playlists },
   } = useLibraryContext();
   const { token } = getLocalCredentials();
-  const { toast } = useToast();
 
   const savedVideos = playlists.filter((playlistObj) => playlistObj.name === "Saved Videos")[0].videos;
 
   const savedVideosPlaylistId = getIdOfAPlaylist(playlists, "Saved Videos");
 
+  if (savedVideos && savedVideos.length === 0) {
+    return <EmptyPlaylistComponent videosOf="Saved Videos" />;
+  }
+
   return (
     <div className="flex flex--column align-items--c justify-content--c">
-      {!savedVideos && <div>why so empty....</div>}
       {savedVideos &&
         savedVideos.map((videoObj) => (
           <div
@@ -46,7 +48,6 @@ export const SavedVideos = () => {
                 onClick={() =>
                   deleteVideoFromPlaylist({
                     url: `${BASE_URL}/playlist/${savedVideosPlaylistId}/${videoObj._id}`,
-                    toast,
                     dispatch,
                     token,
                   })

@@ -3,26 +3,28 @@ import { Link } from "react-router-dom";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { BtnIcon } from "morphine-ui";
 import { getIdOfAPlaylist } from "../../utils/array-functions";
-import { useToast } from "../../context/toastState";
 import { getLocalCredentials } from "../../utils/localStorage";
 import { deleteVideoFromPlaylist } from "../../utils/serverRequests";
 import { BASE_URL } from "../../utils/apiRoutes";
+import { EmptyPlaylistComponent } from "../../components/EmptyPlaylistComponent/EmptyPlaylistComponent";
 
 export const WatchLater = () => {
   const {
     state: { playlists },
     dispatch,
   } = useLibraryContext();
-  const { toast } = useToast();
   const { token } = getLocalCredentials();
 
   const watchLater = playlists.filter((playlistObj) => playlistObj.name === "Watch Later")[0].videos;
 
   const watchLaterPlaylistId = getIdOfAPlaylist(playlists, "Watch Later");
 
+  if (watchLater && watchLater.length === 0) {
+    return <EmptyPlaylistComponent videosOf="Watch Later" />;
+  }
+
   return (
     <div className="flex flex--column align-items--c justify-content--c">
-      {!watchLater && <div>why so empty....</div>}
       {watchLater &&
         watchLater.map((videoObj) => (
           <div
@@ -45,7 +47,6 @@ export const WatchLater = () => {
                 onClick={() =>
                   deleteVideoFromPlaylist({
                     url: `${BASE_URL}/playlist/${watchLaterPlaylistId}/${videoObj._id}`,
-                    toast,
                     dispatch,
                     token,
                   })
