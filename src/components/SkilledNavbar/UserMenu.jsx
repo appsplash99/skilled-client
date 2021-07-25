@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BtnInverted, Btn, DataBadgeIcon } from "morphine-ui";
 import { BsBookmarkFill } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
