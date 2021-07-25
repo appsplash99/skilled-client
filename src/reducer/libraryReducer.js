@@ -1,6 +1,12 @@
+/**
+ * TODO:
+ *  1. seperate actions
+ *  2. remove unwanted actions and reducers
+ *  */
 export const playlistActions = {
   LOAD_ALL_PLAYLISTS: "LOAD_ALL_PLAYLISTS",
   CREATE_NEW_PLAYLIST: "CREATE_NEW_PLAYLIST",
+  CONCAT_CREATED_PLAYLIST: "CONCAT_CREATED_PLAYLIST",
   UPDATE_PLAYLIST: "UPDATE_PLAYLIST",
   DELETE_PLAYLIST: "DELETE_PLAYLIST",
   LOAD_LIKED_VIDEOS_IN_PLAYLIST: "LOAD_LIKED_VIDEOS_IN_PLAYLIST",
@@ -38,6 +44,13 @@ export const libraryReducer = (prevState, { type, payload }) => {
     /** NEW PLAYLIST ACTIONS */
     case playlistActions.LOAD_ALL_PLAYLISTS:
       return { ...prevState, playlists: payload };
+
+    case playlistActions.CONCAT_CREATED_PLAYLIST:
+      return {
+        ...prevState,
+        // add created playlist in context
+        playlists: prevState.playlists.concat(payload),
+      };
 
     case playlistActions.LOAD_VIDEOS_OF_A_PLAYLIST:
       return {
