@@ -14,11 +14,10 @@ import {
 } from "./pages";
 import "./App.css";
 import { PLAYLIST_ROUTE } from "./utils/apiRoutes";
-import { PrivateRoute } from "./components/PrivateRoute";
+import { PrivateRoute, SkilledNavbar } from "./components";
 import { useLibraryContext } from "./context/libraryState";
 import { getLocalCredentials } from "./utils/localStorage";
 import { loadUserPlaylists } from "./utils/serverRequests";
-import { SkilledNavbar } from "./components/SkilledNavbar/SkilledNavbar";
 import { ToastContainer } from "react-toastify";
 
 function App() {
