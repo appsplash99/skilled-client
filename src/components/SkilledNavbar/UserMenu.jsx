@@ -9,8 +9,10 @@ import { useLibraryContext } from "../../context/libraryState";
 import { getLocalCredentials, removeLocalCredentials } from "../../utils/localStorage";
 import "./UserMenu.css";
 
+// TODO: need to change when user sign's up
 export const UserMenu = () => {
   const [hasToken, setHasToken] = useState(false);
+  const { token } = getLocalCredentials();
   const navigate = useNavigate();
   const {
     state: { playlists },
@@ -24,9 +26,8 @@ export const UserMenu = () => {
   };
 
   useEffect(() => {
-    const { token } = getLocalCredentials();
     token && setHasToken(true);
-  }, []);
+  }, [hasToken]);
 
   if (hasToken) {
     return (
@@ -43,14 +44,17 @@ export const UserMenu = () => {
           ></DataBadgeIcon>
           <h3 className="non-desktop-title">Playlists</h3>
         </Link>
-
         <Link className="nav__link text--dark flex align-items--c gap" to="/watch-later">
           <DataBadgeIcon
             iconstyle={{
               backgroundColor: "inherit",
               margin: 0,
             }}
-            data={playlists ? playlists?.find((playlistObj) => playlistObj.name === "Watch Later")?.videos?.length : 0}
+            data={
+              playlists
+                ? playlists && playlists?.find((playlistObj) => playlistObj.name === "Watch Later")?.videos?.length
+                : 0
+            }
             variant="square"
             icon={<MdWatchLater className="text--xxl" />}
           ></DataBadgeIcon>
