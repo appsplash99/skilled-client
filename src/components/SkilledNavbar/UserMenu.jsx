@@ -9,9 +9,7 @@ import { useLibraryContext } from "../../context/libraryState";
 import { getLocalCredentials, removeLocalCredentials } from "../../utils/localStorage";
 import "./UserMenu.css";
 
-// TODO: need to change when user sign's up
 export const UserMenu = () => {
-  const [hasToken, setHasToken] = useState(false);
   const { token } = getLocalCredentials();
   const navigate = useNavigate();
   const {
@@ -25,11 +23,7 @@ export const UserMenu = () => {
     navigate("/");
   };
 
-  useEffect(() => {
-    token && setHasToken(true);
-  }, [token]);
-
-  if (hasToken) {
+  if (token) {
     return (
       <>
         <Link className="nav__link text--dark flex align-items--c gap" to="/playlist">
