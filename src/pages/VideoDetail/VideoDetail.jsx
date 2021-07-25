@@ -14,17 +14,16 @@ import { getLocalCredentials } from "../../utils/localStorage";
 import { SaveVideoBtn } from "./SaveVideoBtn";
 import { addVideoToPlaylistDb, removeVideoFromPlaylistDb } from "../../utils/serverRequests";
 import { BASE_URL } from "../../utils/apiRoutes";
-import { useToast } from "../../context/toastState";
 import axios from "axios";
-import { toggleToast } from "../../utils/cutomToastStyles";
+import { toast } from "react-toastify";
 
 export const VideoDetail = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [desiredVideo, setDesiredVideo] = useState({});
   const navigate = useNavigate();
   const { token } = getLocalCredentials();
   const customIFrameWidth = useWidth();
-  const { toast } = useToast();
   const { _id } = useParams();
 
   const {
@@ -41,14 +40,17 @@ export const VideoDetail = () => {
     mounted &&
       (async () => {
         try {
+          setIsLoading(true);
           const {
             data: { response, success },
           } = await axios.get(`${BASE_URL}/videos/${_id}`, {
             cancelToken: source.token,
           });
           if (success) setDesiredVideo(response);
+          setIsLoading(false);
         } catch (error) {
-          toggleToast(toast, error, "Unable to Ftech Video Details");
+          setIsLoading(false);
+          toast.error("Unable to Ftech Video Details");
         }
       })();
     return () => {
@@ -61,18 +63,9 @@ export const VideoDetail = () => {
   const savedVideosPlaylistId = getIdOfAPlaylist(playlists, "Saved Videos");
   const watchLaterPlaylistId = getIdOfAPlaylist(playlists, "Watch Later");
 
-  // Show Loader
-  if (!desiredVideo) {
+  if (isLoading && !desiredVideo) {
     return (
-      <div
-        style={{
-          height: "80vh",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <div className="flex flex--column align-items--c justify-content--c" style={{ height: "80vh" }}>
         <LoaderCometSpinner color="lightblue" style={{ height: "100px", width: "100px" }} />
       </div>
     );
@@ -112,31 +105,29 @@ export const VideoDetail = () => {
                 isVideoInPlaylist({ userPlaylists: playlists, playlistId: likedVideosPlaylistId, videoId: _id })
               }
               handleAddtoLikedVideos={async () => {
-                toggleToast(toast, "info", "Liking Video...");
+                toast.info("Liking Video...");
                 const {
                   data: { success, response },
                 } = await addVideoToPlaylistDb({
                   url: `${BASE_URL}/playlist/${likedVideosPlaylistId}/${_id}`,
-                  toast,
                   token,
                   dispatch,
                 });
                 if (success) {
-                  toggleToast(toast, "success", "Video Liked!");
+                  toast.success("Video Liked!");
                   dispatch({ type: "LOAD_VIDEOS_OF_A_PLAYLIST", payload: response });
                 }
               }}
               handleRemoveFromLikedVideos={async () => {
-                toggleToast(toast, "info", "Disliking Video...");
+                toast.info("Disliking Video...");
                 const {
                   data: { success, response },
                 } = await removeVideoFromPlaylistDb({
                   url: `${BASE_URL}/playlist/${likedVideosPlaylistId}/${_id}`,
-                  toast,
                   token,
                 });
                 if (success) {
-                  toggleToast(toast, "success", "Disliked the Video!");
+                  toast.success("Disliked the Video!");
                   dispatch({ type: "LOAD_VIDEOS_OF_A_PLAYLIST", payload: response });
                 }
               }}
@@ -149,31 +140,29 @@ export const VideoDetail = () => {
                 isVideoInPlaylist({ userPlaylists: playlists, playlistId: watchLaterPlaylistId, videoId: _id })
               }
               handleAddToWatchLater={async () => {
-                toggleToast(toast, "info", "Adding to Watch Later...");
+                toast.info("Adding to Watch Later...");
                 const {
                   data: { success, response },
                 } = await addVideoToPlaylistDb({
                   url: `${BASE_URL}/playlist/${watchLaterPlaylistId}/${_id}`,
-                  toast,
                   token,
                   dispatch,
                 });
                 if (success) {
-                  toggleToast(toast, "success", "Video Added to Watch Lat!");
+                  toast.success("Video Added to Watch Lat!");
                   dispatch({ type: "LOAD_VIDEOS_OF_A_PLAYLIST", payload: response });
                 }
               }}
               handleRemoveFromWatchLater={async () => {
-                toggleToast(toast, "info", "Removing Video from Watch Later...");
+                toast.info("Removing Video from Watch Later...");
                 const {
                   data: { success, response },
                 } = await removeVideoFromPlaylistDb({
                   url: `${BASE_URL}/playlist/${watchLaterPlaylistId}/${_id}`,
-                  toast,
                   token,
                 });
                 if (success) {
-                  toggleToast(toast, "success", "Video Removed from Watch Later!");
+                  toast.success("Video Removed from Watch Later!");
                   dispatch({ type: "LOAD_VIDEOS_OF_A_PLAYLIST", payload: response });
                 }
               }}
@@ -191,30 +180,28 @@ export const VideoDetail = () => {
                 isVideoInPlaylist({ userPlaylists: playlists, playlistId: savedVideosPlaylistId, videoId: _id })
               }
               handleAddToSavedVideos={async () => {
-                toggleToast(toast, "info", "Saving Video...");
+                toast.info("Saving Video...");
                 const {
                   data: { success, response },
                 } = await addVideoToPlaylistDb({
                   url: `${BASE_URL}/playlist/${savedVideosPlaylistId}/${_id}`,
-                  toast,
                   token,
                 });
                 if (success) {
-                  toggleToast(toast, "success", "Added to Saved Videos!");
+                  toast.success("Added to Saved Videos!");
                   dispatch({ type: "LOAD_VIDEOS_OF_A_PLAYLIST", payload: response });
                 }
               }}
               handleRemoveFromSavedVideos={async () => {
-                toggleToast(toast, "info", "Removing Saved Video...");
+                toast.info("Removing Saved Video...");
                 const {
                   data: { success, response },
                 } = await removeVideoFromPlaylistDb({
                   url: `${BASE_URL}/playlist/${savedVideosPlaylistId}/${_id}`,
-                  toast,
                   token,
                 });
                 if (success) {
-                  toggleToast(toast, "success", "Removed from Saved Videos!");
+                  toast.success("Removed from Saved Videos!");
                   dispatch({ type: "LOAD_VIDEOS_OF_A_PLAYLIST", payload: response });
                 }
               }}
