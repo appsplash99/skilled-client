@@ -1,5 +1,5 @@
 import { useLibraryContext } from "../../context/libraryState";
-import { Btn, BtnIcon } from "morphine-ui";
+import { BtnIcon } from "morphine-ui";
 import { IoIosCloseCircle } from "react-icons/io";
 import { deletePlaylistFromDb } from "../../utils/serverRequests";
 import { toggleToast } from "../../utils/cutomToastStyles";
@@ -19,7 +19,7 @@ export const Playlists = () => {
 
   return (
     <div className="flex flex--column align-items--c justify-content--c">
-      {!playlists | (playlists.length < 1) && <div>why so empty....</div>}
+      {!playlists && playlists?.length < 1 && <div>why so empty....</div>}
       {playlists &&
         playlists.map((playlistObj, index) => (
           <div
@@ -59,7 +59,6 @@ export const Playlists = () => {
                 </div>
               )}
             </div>
-            {/* <div>{JSON.stringify(playlistObj.videos)}</div> */}
           </div>
         ))}
     </div>
