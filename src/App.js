@@ -31,7 +31,7 @@ function App() {
     setIsLoading(true);
     token && loadUserPlaylists({ dispatch, url: PLAYLIST_ROUTE, token });
     setIsLoading(false);
-  }, [token]);
+  }, [token, dispatch]);
 
   if (isLoading === true) {
     return (
