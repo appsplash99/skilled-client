@@ -1,21 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
-import { LibraryContextProvider } from "./context/libraryState";
-import { ToastProvider } from "./context/toastState";
-import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
+import App from "./App";
+import { store } from "./app/store";
+import { Provider } from "react-redux";
+import "react-toastify/dist/ReactToastify.css";
+import { LibraryContextProvider } from "./context/libraryState";
 
 ReactDOM.render(
   <React.StrictMode>
-    <LibraryContextProvider>
-      <ToastProvider>
+    <Provider store={store}>
+      <LibraryContextProvider>
         <Router>
           <App />
         </Router>
-      </ToastProvider>
-    </LibraryContextProvider>
+      </LibraryContextProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
