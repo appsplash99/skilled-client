@@ -3,20 +3,20 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { BtnIcon, Btn } from "morphine-ui";
 import { useLibraryContext } from "../../context/libraryState";
 import { AddToPlaylistBtn } from "./AddToPlaylistBtn";
-import { useToast } from "../../context/toastState";
 import { addVideoToPlaylistDb, removeVideoFromPlaylistDb, createNewPlaylistInDb } from "../../utils/serverRequests";
 import { BASE_URL } from "../../utils/apiRoutes";
 import { getLocalCredentials } from "../../utils/localStorage";
 import { isVideoInPlaylist } from "../../utils/array-functions";
+import { toast } from "react-toastify";
 
 export const ModalAddToPlaylist = ({ desiredVideoId, showModal, setShowModal }) => {
   const {
     state: { playlists },
     dispatch: playlistDispatch,
   } = useLibraryContext();
-  const { toast, toggleToast } = useToast();
   const [newPlaylistName, setNewPlaylistName] = useState("");
-  const { token, userId } = getLocalCredentials();
+  // const { token, userId } = getLocalCredentials();
+  const { token } = getLocalCredentials();
   console.log({ playlists });
 
   const playlistsContainTheVideo = playlists.filter((playlistObj) =>
@@ -77,34 +77,32 @@ export const ModalAddToPlaylist = ({ desiredVideoId, showModal, setShowModal }) 
                         videoId: desiredVideoId,
                       })}
                       handleAddToDesiredPlaylist={async () => {
-                        toggleToast(toast, "info", `Adding to ${playlistObj.name}...`);
+                        toast.info(`Adding to ${playlistObj.name}...`);
                         const {
                           data: { success, response },
                         } = await addVideoToPlaylistDb({
                           url: `${BASE_URL}/playlist/${playlistObj._id}/${desiredVideoId}`,
-                          toast,
                           token,
                           dispatch: playlistDispatch,
                         });
 
                         if (success) {
-                          toggleToast(toast, "success", `Added to ${playlistObj.name}...`);
+                          toast.success(`Added to ${playlistObj.name}...`);
                           playlistDispatch({ type: "LOAD_VIDEOS_OF_A_PLAYLIST", payload: response });
                         }
                       }}
                       handleRemoveFromDesiredPlaylist={async () => {
-                        toggleToast(toast, "info", `Removing from ${playlistObj.name}...`);
+                        toast.info(`Removing from ${playlistObj.name}...`);
                         const {
                           data: { success, response },
                         } = await removeVideoFromPlaylistDb({
                           url: `${BASE_URL}/playlist/${playlistObj._id}/${desiredVideoId}`,
-                          toast,
                           token,
                           dispatch: playlistDispatch,
                         });
 
                         if (success) {
-                          toggleToast(toast, "success", `Removed from ${playlistObj.name}...`);
+                          toast.success(`Removed from ${playlistObj.name}...`);
                           playlistDispatch({ type: "LOAD_VIDEOS_OF_A_PLAYLIST", payload: response });
                         }
                       }}
@@ -130,25 +128,25 @@ export const ModalAddToPlaylist = ({ desiredVideoId, showModal, setShowModal }) 
             // Creates a new Playlist
             onClick={async () => {
               try {
-                toggleToast(toast, "info", "Creating New Playlist");
                 if (newPlaylistName !== "") {
+                  toast.info("Creating New Playlist");
                   const {
                     data: { success, response },
                   } = await createNewPlaylistInDb({
-                    url: `${BASE_URL}/playlist/${userId}`,
+                    url: `${BASE_URL}/playlist/${desiredVideoId}`,
                     newPlaylistName,
                     token,
                     toast,
                   });
                   if (success) {
-                    toggleToast(toast, "success", "Playlist Created Successfully");
-                    playlistDispatch({ type: "LOAD_ALL_PLAYLISTS", payload: response });
+                    toast.success("Playlist Created Successfully");
+                    playlistDispatch({ type: "CONCAT_CREATED_PLAYLIST", payload: response });
                     setNewPlaylistName("");
                   }
                 }
               } catch (error) {
                 console.log(error);
-                toggleToast(toast, "error", "Unable to create Playlist");
+                toast.error("Unable to create Playlist");
                 setNewPlaylistName("");
               }
             }}

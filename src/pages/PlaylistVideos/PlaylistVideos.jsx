@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { toSpacedTitleCase } from "../../utils/utils";
 import { getVideosOfPlaylistCategory } from "../../utils/array-functions";
 import { useLibraryContext } from "../../context/libraryState";
-import { VideoCardHorizontal } from "../../components/VideoCardHorizontal";
+import { VideoCardHorizontal } from "../../components";
 
 export const PlaylistVideos = () => {
   const { playlistName, playlistId } = useParams();

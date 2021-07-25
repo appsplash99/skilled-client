@@ -13,26 +13,24 @@ import {
   PlaylistVideos,
 } from "./pages";
 import "./App.css";
-import { useToast } from "./context/toastState";
 import { PLAYLIST_ROUTE } from "./utils/apiRoutes";
-import { PrivateRoute } from "./components/PrivateRoute";
+import { PrivateRoute, SkilledNavbar } from "./components";
 import { useLibraryContext } from "./context/libraryState";
 import { getLocalCredentials } from "./utils/localStorage";
 import { loadUserPlaylists } from "./utils/serverRequests";
-import { SkilledNavbar } from "./components/SkilledNavbar/SkilledNavbar";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const { token } = getLocalCredentials();
   const { dispatch } = useLibraryContext();
-  const { ToastContainer, toast } = useToast();
 
   useEffect(() => {
     setIsLoading(true);
-    token && loadUserPlaylists({ dispatch, url: PLAYLIST_ROUTE, token, toast });
+    token && loadUserPlaylists({ dispatch, url: PLAYLIST_ROUTE, token });
     setIsLoading(false);
-  }, [token]);
+  }, [token, dispatch]);
 
   if (isLoading === true) {
     return (
@@ -73,7 +71,7 @@ function App() {
       </div>
       <ToastContainer
         position="bottom-right"
-        autoClose={5000}
+        autoClose={2700}
         hideProgressBar={false}
         newestOnTop={true}
         closeOnClick

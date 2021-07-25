@@ -2,17 +2,29 @@ import { useLibraryContext } from "../../context/libraryState";
 import { Link } from "react-router-dom";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { BtnIcon } from "morphine-ui";
+import { getIdOfAPlaylist } from "../../utils/array-functions";
+import { getLocalCredentials } from "../../utils/localStorage";
+import { deleteVideoFromPlaylist } from "../../utils/serverRequests";
+import { BASE_URL } from "../../utils/apiRoutes";
+import { EmptyPlaylistComponent } from "../../components";
 
 export const WatchLater = () => {
   const {
     state: { playlists },
+    dispatch,
   } = useLibraryContext();
+  const { token } = getLocalCredentials();
 
   const watchLater = playlists.filter((playlistObj) => playlistObj.name === "Watch Later")[0].videos;
 
+  const watchLaterPlaylistId = getIdOfAPlaylist(playlists, "Watch Later");
+
+  if (watchLater && watchLater.length === 0) {
+    return <EmptyPlaylistComponent videosOf="Watch Later" />;
+  }
+
   return (
     <div className="flex flex--column align-items--c justify-content--c">
-      {!watchLater && <div>why so empty....</div>}
       {watchLater &&
         watchLater.map((videoObj) => (
           <div
@@ -32,12 +44,13 @@ export const WatchLater = () => {
               <BtnIcon
                 variant="error"
                 size="lg"
-                // onClick={() =>
-                //  { dispatch({
-                //     type: "REMOVE_VIDEO_FROM_LIKED_VIDEOS",
-                //     payload: videoObj.videoId,
-                //   })}
-                // }
+                onClick={() =>
+                  deleteVideoFromPlaylist({
+                    url: `${BASE_URL}/playlist/${watchLaterPlaylistId}/${videoObj._id}`,
+                    dispatch,
+                    token,
+                  })
+                }
               >
                 <FaRegTrashAlt className="text--xl text--danger m0" />
               </BtnIcon>

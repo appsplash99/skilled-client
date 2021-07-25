@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { SIGNUP_ROUTE } from "../../utils/apiRoutes";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { signupValidationSchema } from "../../utils/formValidations";
+import { toast } from "react-toastify";
 
 export const SignUp = (props) => {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ export const SignUp = (props) => {
       // console.log(REGISTER_ROUTE);
       // console.log({ response }, null, 2);
     } catch (error) {
+      toast.error(error.message);
       console.log(error);
     }
   };

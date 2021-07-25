@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { FaPlayCircle } from "react-icons/fa";
 import { VIDEOS_URL } from "../../utils/apiRoutes";
-import { useToast } from "../../context/toastState";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { loadVideosFromDB } from "../../utils/serverRequests";
 import { getLocalCredentials } from "../../utils/localStorage";
 import { useLibraryContext } from "../../context/libraryState";
-import { VideoCardBig, BtnInverted, LoaderCometSpinner } from "morphine-ui";
+import { VideoCardBig, LoaderCometSpinner } from "morphine-ui";
 import { kFormatter, getIdOfAPlaylist, isVideoInPlaylist, playlistsContainTheVideo } from "../../utils/array-functions";
+import { toast } from "react-toastify";
 
 export const VideoListing = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { toast, toggleToast } = useToast();
   const navigate = useNavigate();
   const {
     state: { videos, playlists },
@@ -20,38 +18,21 @@ export const VideoListing = () => {
   const { token } = getLocalCredentials();
 
   useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      await loadVideosFromDB({ dispatch, url: VIDEOS_URL, token, toast });
-    })();
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-  }, []);
-
-  useEffect(() => {
-    if (!videos) {
-      setIsLoading(true);
-    }
-    return () => {
-      setIsLoading(false);
-    };
-  }, []);
+    // (async () => {
+    // })();
+    setIsLoading(true);
+    loadVideosFromDB({ dispatch, url: VIDEOS_URL, token });
+    setIsLoading(false);
+    // setTimeout(() => {}, 2000);
+    // }, []);
+  }, [playlists, dispatch, token]);
 
   const likedVideosPlaylistId = getIdOfAPlaylist(playlists, "Liked Videos");
   const watchLaterPlaylistId = getIdOfAPlaylist(playlists, "Watch Later");
 
-  if (isLoading === true && !videos) {
+  if (isLoading && !videos) {
     return (
-      <div
-        style={{
-          height: "80vh",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <div className="flex flex--column align-items--c justify-content--c" style={{ height: "80vh" }}>
         <LoaderCometSpinner color="lightblue" style={{ height: "100px", width: "100px" }} />
       </div>
     );
@@ -72,13 +53,13 @@ export const VideoListing = () => {
               key={index}
               className="cursor--pointer"
               onClick={() => {
-                toggleToast(toast, "info", "Enjoy the Video");
+                toast.info("Enjoy the Video");
                 navigate(`videos/${videoObj._id}`);
               }}
             >
               <VideoCardBig
                 videoId={videoObj.videoId}
-                title={videoObj.title.slice(0, 30)}
+                title={videoObj.title.slice(0, 25)}
                 description={videoObj.description}
                 length={videoObj.length}
                 views={videoObj.views}
@@ -105,17 +86,6 @@ export const VideoListing = () => {
                         videoId: videoObj._id,
                       })
                     : false
-                }
-                /** TODO: COMPLETE ABOVE ERROR */
-                playNowBtn={
-                  <Link to={`/:${videoObj.videoId}`}>
-                    <BtnInverted variant="primary" size="sm" style={{ border: "2px solid var(--themePrimary)" }}>
-                      <div className="flex align-items--c justify-content--sb gap--xxs">
-                        <FaPlayCircle className="text--lg" />
-                        <div className="text--xxs">Play Now</div>
-                      </div>
-                    </BtnInverted>
-                  </Link>
                 }
               />
             </div>
